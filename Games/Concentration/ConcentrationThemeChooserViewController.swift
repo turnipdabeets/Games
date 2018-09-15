@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConcentrationThemeChooserViewController: UIViewController {
+class ConcentrationThemeChooserViewController: UIViewController, UISplitViewControllerDelegate {
     
     private var splitViewDetailConcentrationViewController: ConcentrationViewController? {
         return splitViewController?.viewControllers.last as? ConcentrationViewController
@@ -22,6 +22,24 @@ class ConcentrationThemeChooserViewController: UIViewController {
         self.navigationItem.title = "Choose A Theme"
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        splitViewController?.delegate = self
+    }
+    
+    func splitViewController(
+        _ splitViewController: UISplitViewController,
+        collapseSecondary secondaryViewController: UIViewController,
+        onto primaryViewController: UIViewController
+        ) -> Bool {
+        if let cvc = secondaryViewController as? ConcentrationViewController {
+            if cvc.theme == nil {
+                return true
+            }
+        }
+        return false
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Choose Theme" {
             if let cvc = segue.destination as? ConcentrationViewController {
@@ -30,7 +48,7 @@ class ConcentrationThemeChooserViewController: UIViewController {
             }
         }
     }
-
+    
     @IBAction func changeTheme(_ sender: Any) {
         if let cvc = splitViewDetailConcentrationViewController {
             // allows to change theme in middle of game for ipad
