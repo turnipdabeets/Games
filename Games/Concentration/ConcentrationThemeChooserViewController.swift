@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConcentrationThemeChooserViewController: UIViewController, UISplitViewControllerDelegate {
+class ConcentrationThemeChooserViewController: VCLLoggingViewController, UISplitViewControllerDelegate {
     
     private var splitViewDetailConcentrationViewController: ConcentrationViewController? {
         return splitViewController?.viewControllers.last as? ConcentrationViewController
@@ -16,6 +16,10 @@ class ConcentrationThemeChooserViewController: UIViewController, UISplitViewCont
     private var lastSeguedViewController: ConcentrationViewController?
     
     private var theme = Theme()
+    
+    override var vclLoggingName: String {
+        return "Master Theme Chooser"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
