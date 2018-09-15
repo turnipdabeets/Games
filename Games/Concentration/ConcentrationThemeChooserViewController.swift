@@ -10,11 +10,47 @@ import UIKit
 
 class ConcentrationThemeChooserViewController: UIViewController {
     
+    private var splitViewDetailConcentrationViewController: ConcentrationViewController? {
+        return splitViewController?.viewControllers.last as? ConcentrationViewController
+    }
+    private var lastSeguedViewController: ConcentrationViewController?
+    
     private var theme = Theme()
     
-    @IBAction func changeTheme(_ sender: Any) {
-        performSegue(withIdentifier: "Choose Theme", sender: sender)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationItem.title = "Choose A Theme"
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Choose Theme" {
+            if let cvc = segue.destination as? ConcentrationViewController {
+                setTheme(of: cvc, by: sender)
+                lastSeguedViewController = cvc
+            }
+        }
+    }
+
+    @IBAction func changeTheme(_ sender: Any) {
+        if let cvc = splitViewDetailConcentrationViewController {
+            // allows to change theme in middle of game for ipad
+            setTheme(of: cvc, by: sender)
+        } else if let cvc = lastSeguedViewController {
+            // allows to change theme in middle of game for iphone after selecting a theme
+            setTheme(of: cvc, by: sender)
+            navigationController?.pushViewController(cvc, animated: true)
+        } else {
+            performSegue(withIdentifier: "Choose Theme", sender: sender)
+        }
+    }
+    
+    private func setTheme(of: ConcentrationViewController, by: Any?) -> Void {
+        if let buttonIdentifier = (by as? UIButton)?.restorationIdentifier {
+            let selectedTheme = getTheme(identifier: buttonIdentifier)
+            of.theme = selectedTheme
+        }
+    }
+    
     private func getTheme(identifier: String) -> [String] {
         switch identifier {
         case "halloween":
@@ -35,15 +71,4 @@ class ConcentrationThemeChooserViewController: UIViewController {
             return theme.getRandomThemeIcons()
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Choose Theme" {
-            if let buttonIdentifier = (sender as? UIButton)?.restorationIdentifier, let cvc = segue.destination as? ConcentrationViewController {
-                let selectedTheme = getTheme(identifier: buttonIdentifier)
-                print("selectedTheme", selectedTheme)
-                cvc.theme = selectedTheme
-            }
-        }
-    }
-    
 }

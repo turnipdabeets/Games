@@ -43,42 +43,41 @@ class ConcentrationViewController: UIViewController {
         // reset game
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
         // reset theme choices
-        emojiChoices = [""]
+        emojiChoices = Theme().getRandomThemeIcons()
         // update view
         updateViewFromModel()
         navigationController?.popViewController(animated: true)
     }
     
     private func updateViewFromModel(){
-        flipCount = game.flipCount
-        scoreCount = game.score
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControlState.normal)
-                button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            } else {
-                button.setTitle("", for: UIControlState.normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        if cardButtons != nil {
+            flipCount = game.flipCount
+            scoreCount = game.score
+            for index in cardButtons.indices {
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: UIControlState.normal)
+                    button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                } else {
+                    button.setTitle("", for: UIControlState.normal)
+                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+                }
             }
+            finishedLabel.textColor = game.allCardsHaveBeenMatched ? #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1) : #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
+            finishedLabel.text = game.score >= 0 ? "Nice work! 👍" : "Phew, 🐻ly made it"
         }
-        finishedLabel.textColor = game.allCardsHaveBeenMatched ? #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1) : #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
-        finishedLabel.text = game.score >= 0 ? "Nice work! 👍" : "Phew, 🐻ly made it"
     }
     
     var theme: [String]? {
         didSet {
-            emojiChoices = theme ?? [""]
+            emojiChoices = theme ?? Theme().getRandomThemeIcons()
             emoji = [:]
+            updateViewFromModel()
         }
     }
     
-    var emojiChoices = ["👻", "😈", "👹", "👺", "🎃", "☠️", "🦇", "💀"]
-    
-    //    private var theme = Theme()
-    //
-    //    private lazy var emojiChoices = theme.getRandomThemeIcons()
+    lazy var emojiChoices = Theme().getRandomThemeIcons()
     
     private var emoji = [ConcentrationCard: String]()
     
