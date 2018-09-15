@@ -46,8 +46,6 @@ class ConcentrationViewController: VCLLoggingViewController {
     @IBAction func touchNewGame(_ sender: UIButton) {
         // reset game
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-        // reset theme choices
-        emojiChoices = Theme().getRandomThemeIcons()
         // update view
         updateViewFromModel()
         navigationController?.popViewController(animated: true)

@@ -59,6 +59,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A91D99CE214D852F003D4997 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A95E7583214C428C0065949C /* AppDelegate.swift */,
+				A95E758A214C428C0065949C /* Assets.xcassets */,
+				A95E758C214C428C0065949C /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A91D99CF214D859F003D4997 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A91D99CC214D7F5A003D4997 /* VCLLoggingViewController.swift */,
+				A95E75AB214C45BD0065949C /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		A95E7577214C428C0065949C = {
 			isa = PBXGroup;
 			children = (
@@ -78,13 +97,10 @@
 		A95E7582214C428C0065949C /* Games */ = {
 			isa = PBXGroup;
 			children = (
-				A91D99CC214D7F5A003D4997 /* VCLLoggingViewController.swift */,
-				A95E7583214C428C0065949C /* AppDelegate.swift */,
-				A95E7587214C428C0065949C /* Main.storyboard */,
-				A95E758A214C428C0065949C /* Assets.xcassets */,
-				A95E758C214C428C0065949C /* LaunchScreen.storyboard */,
 				A95E758F214C428C0065949C /* Info.plist */,
-				A95E75AB214C45BD0065949C /* Utils.swift */,
+				A91D99CF214D859F003D4997 /* Utils */,
+				A95E7587214C428C0065949C /* Main.storyboard */,
+				A91D99CE214D852F003D4997 /* Supporting Files */,
 				A95E7595214C42990065949C /* Concentration */,
 				A95E759E214C43C00065949C /* Set */,
 			);
